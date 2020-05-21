@@ -24,12 +24,15 @@ const GlobalState = props => {
                 title: _book.title,
                 description: _book.description,
                 tags: _book.tags,
+                imageURL: _book.imageURL,
+                createdDate: _book.createdDate,
                 lists: _book.lists
             }
         })
     };
-    const removeBook = () => {
-        dispatch({type: REMOVE_BOOK, uuid: 1})
+    const removeBook = (uuid) => {
+
+        dispatch({type: REMOVE_BOOK, uuid: uuid})
     };
 
 
@@ -38,7 +41,8 @@ const GlobalState = props => {
             addBook: addBook,
             deleteBook: removeBook,
 
-            Books: state.books ?? []
+            Books: state.books ?? [],
+
         }}>{props.children}
         </BookContext.Provider>
 

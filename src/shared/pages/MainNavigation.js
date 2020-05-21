@@ -9,7 +9,7 @@ const MainNavigation = () => {
 
                     <div className="buttons">
                         <div className="button is-primary">
-                            <strong>UBER</strong>
+                            <strong>BOOK MANAGER</strong>
                         </div>
 
                     </div>

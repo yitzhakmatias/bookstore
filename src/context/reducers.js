@@ -8,11 +8,15 @@ export const initialState = {
              title: "",
              description: "",
              tags: [],
-             lists: []
+             lists: [],
+             imageURL:"",
+             createdDate:new Date
          }*/
     ],
     loading: false,
-    error: null
+    error: null,
+    Lists:[],
+
 };
 const addBook = (state, book) => {
    // console.log("asasd");
@@ -27,7 +31,11 @@ const addBook = (state, book) => {
     }
 };
 const removeBook = (state,id) => {
-    return state.books.filter(p=>p.uuid!==id);
+    let books = state.books.filter(p=>p.uuid!==id);
+    return {
+        ...state,
+        books: books
+    }
 };
 
 
