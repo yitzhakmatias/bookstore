@@ -1,19 +1,23 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import BookList from '../components/booklist'
 import ModalBook from "../components/modalBook";
 import Book from "../components/book";
+import BookContext from "../../context/IBookContext";
 
 
 const Books = () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+    const [book, setBook] = useState({});
+    const bookContext = useContext(BookContext);
 
     const inputChangeHandler = (uuid) => {
-        console.log(uuid);
+        let book= bookContext.Books.find(p=>p.uuid===uuid);
+        setBook(book);
         setShowModal(true);
-
     };
     const handleVisibility = () => {
+
         setShowModal(false);
     };
     return (
@@ -29,7 +33,7 @@ const Books = () => {
                 <div className="tile is-parent">
                     <div className="tile is-child box">
                         {showModal ?
-                            <ModalBook isVisible={() => handleVisibility()}/>
+                            <ModalBook book={book} isVisible={() => handleVisibility()}/>
                             : null}
 
                         <article className="panel is-primary">
@@ -46,7 +50,7 @@ const Books = () => {
                                 </p>
                             </div>
                             <div className="panel-block">
-                                <BookList editBook={inputChangeHandler}></BookList>
+                                <BookList editBook={inputChangeHandler} />
                             </div>
 
                         </article>

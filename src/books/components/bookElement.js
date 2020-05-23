@@ -15,7 +15,7 @@ const BookElement = (props) => {
                         <div className="content">
                             <div className="tags ">
                                 {props.book.tags.map(item=>{
-                                    return <span className="tag is-info  is-normal">{item}</span>;
+                                    return <span className="tag is-info  is-normal" key={item.uuid}>{item}</span>;
                                 })
                                 }
                             </div>

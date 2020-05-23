@@ -13,25 +13,49 @@ export const initialState = {
              createdDate:new Date
          }*/
     ],
+    pageNumbers: [],
     loading: false,
     error: null,
-    Lists:[],
+    Lists: [],
 
 };
 const addBook = (state, book) => {
-   // console.log("asasd");
+
     if (book === []) return {
         ...state
     };
+    let storedBook = state.books.find(p => p.uuid === book.uuid);
+
+    if (storedBook !== undefined && state.books !== undefined) {
+        console.log("update ");
+        let newBooks = state.books.map(p => {
+            if (p.uuid === book.uuid) {
+
+                return {
+                    ...p,
+                    description: book.description,
+                    title: book.title,
+                    tags: book.tags,
+                    imageURL: book.imageURL
+                };
+            }
+            return p;
+        });
+        return {
+            ...state,
+            books: newBooks
+        }
+    }
+
     const newBooks = [...state.books, book];
-   //localStorage.setItem('books', JSON.stringify(newBooks));
+
     return {
         ...state,
         books: newBooks
     }
 };
-const removeBook = (state,id) => {
-    let books = state.books.filter(p=>p.uuid!==id);
+const removeBook = (state, id) => {
+    let books = state.books.filter(p => p.uuid !== id);
     return {
         ...state,
         books: books
@@ -46,7 +70,7 @@ export const bookReducer = (state, action) => {
             return addBook(state, action.Book);
         }
         case REMOVE_BOOK: {
-            return removeBook(state,action.uuid);
+            return removeBook(state, action.uuid);
         }
 
         default:

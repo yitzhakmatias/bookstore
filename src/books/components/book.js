@@ -1,38 +1,50 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./book.scss";
 import ReactTagInput from "@pathofdev/react-tag-input";
 import BookContext from '../../context/IBookContext'
 import {useForm} from "react-hook-form";
 import uuid from 'react-uuid'
 
-const Book = ({save}) => {
+const Book = ({book, save}) => {
     const [tags, setTags] = useState([]);
     const {register, handleSubmit} = useForm({
         nativeValidation: true
     });
     const bookContext = useContext(BookContext);
 
+    useEffect(() => {
+        if (book !== undefined) {
+            console.log(book);
+            let localTags = "pepe estoy en o no ? , pero no o si pepe";
+            setTags(book.tags);
+        }
+    }, []);
 
     const onSubmit = (data, e) => {
 
         let uuidLocal;
-        let existUUID = true;
+        let existUUID = book !== undefined ? book.uuid !== undefined : true;
+
         while (existUUID) {
             uuidLocal = uuid();
             let data = bookContext.Books.find(p => p.uuid === uuidLocal);
             existUUID = data !== undefined;
         }
-        data.uuid = uuidLocal;
+        data.uuid = book !== undefined ? book.uuid : uuidLocal;
+
         data.tags = tags;
 
         data.createdDate = new Date();
-        fetch('https://loremflickr.com/g/320/240/book').then(r =>{
+
+        fetch('https://loremflickr.com/g/320/240/book').then(r => {
             console.log(r);
             data.imageURL = r.url;
             bookContext.addBook(data);
             e.target.reset();
-        } );
 
+        });
+        if (book !== undefined)
+            save();
     };
     return (
 
@@ -47,6 +59,7 @@ const Book = ({save}) => {
                             <label className="label">Title</label>
                             <div className="control">
                                 <input className="input is-light" type="text" placeholder="Please enter  Title "
+                                       defaultValue={book !== undefined ? book.title : ""}
                                        ref={register({required: "Please enter  Title"})}
                                        name="title"/>
                                 <p className="help is-danger">Please enter Title</p>
@@ -56,8 +69,19 @@ const Book = ({save}) => {
                             <label className="label">Description</label>
                             <div className="control">
                                 <textarea className="textarea is-light" placeholder="Please enter  Book Description..."
+                                          defaultValue={book !== undefined ? book.description : ""}
                                           ref={register({required: "Please enter  Book Description"})}
                                           name="description"/>
+
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Image URL </label>
+                            <div className="control">
+                                <input className="input is-light" placeholder="Please enter a URL..."
+                                       defaultValue={book !== undefined ? book.imageURL : ""}
+                                       ref={register()}
+                                       name="url"/>
 
                             </div>
                         </div>

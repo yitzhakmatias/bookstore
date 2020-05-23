@@ -8,8 +8,10 @@ const GlobalState = props => {
         if (!localStorage.hasOwnProperty('books')) return initialState;
         const data = localStorage.getItem('books');
         if (data === "undefined") return initialState;
+
         return data ? {
-            books: JSON.parse(data)
+            books: JSON.parse(data),
+            count: JSON.parse(data).length
         } : [];
     });
     useEffect(() => {
@@ -40,9 +42,8 @@ const GlobalState = props => {
         <BookContext.Provider value={{
             addBook: addBook,
             deleteBook: removeBook,
-
             Books: state.books ?? [],
-
+            count:state.count
         }}>{props.children}
         </BookContext.Provider>
 
