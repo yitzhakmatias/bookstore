@@ -2,7 +2,6 @@
 @import '../node_modules/bulma-extensions/src/sass/index';
 @import "../node_modules/bulma/sass/utilities/initial-variables";
 @import "../node_modules/bulma/sass/utilities/functions";
-
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
@@ -41,3 +40,5 @@ $input-shadow: none;
 
 @import "../node_modules/@pathofdev/react-tag-input/src/styles/index.scss";
 @import "../node_modules/bulma-block-list/src/block-list";
+
+@import "../node_modules/@fortawesome/fontawesome-svg-core/styles.css";

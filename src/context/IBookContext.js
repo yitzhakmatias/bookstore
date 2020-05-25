@@ -4,5 +4,6 @@ export default createContext({
     Books: [{}],
     addBook: () => {},
     deleteBook: () => {},
-
+    addCheckedBookList: () => {},
+    bookList: [{}],
 })

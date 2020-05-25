@@ -1,4 +1,7 @@
 export const ADD_BOOK = "ADD_BOOK";
+export const ADD_BOOK_LIST = "ADD_BOOK_LIST";
+export const ADD_CHECKED_BOOK_LIST = "ADD_CHECKED_BOOK_LIST";
+export const REMOVE_BOOK_LIST = "REMOVE_BOOK_LIST";
 export const REMOVE_BOOK = "REMOVE_BOOK";
 export const GET_BOOKS = "GET_BOOKS";
 export const initialState = {
@@ -16,7 +19,10 @@ export const initialState = {
     pageNumbers: [],
     loading: false,
     error: null,
-    Lists: [],
+    checkedList:[],
+    bookList: [
+        // {id : "", collectionName:"", uuid:[]}
+    ],
 
 };
 const addBook = (state, book) => {
@@ -62,7 +68,36 @@ const removeBook = (state, id) => {
     }
 };
 
+const addBookList = (state, bookList) => {
 
+    if (bookList === []) return {
+        ...state
+    };
+
+    const newBookList = [...state.bookList, bookList];
+
+    return {
+        ...state,
+        bookList: newBookList
+    }
+};
+const removeBookList = (state, id) => {
+    let lists = state.bookList.filter(p => p.id !== id);
+    return {
+        ...state,
+        bookList: lists
+    }
+};
+const addCheckedBookList = (state, bookList) => {
+
+    console.log(bookList);
+/*    const newBookList = [...state.checkedList, bookList];
+    return {
+        ...state,
+        checkedList: newBookList
+    }*/
+
+};
 export const bookReducer = (state, action) => {
 
     switch (action.type) {
@@ -72,7 +107,15 @@ export const bookReducer = (state, action) => {
         case REMOVE_BOOK: {
             return removeBook(state, action.uuid);
         }
-
+        case ADD_BOOK_LIST: {
+            return addBookList(state, action.bookList);
+        }
+        case REMOVE_BOOK_LIST: {
+            return removeBookList(state, action.id);
+        }
+        case ADD_CHECKED_BOOK_LIST: {
+            return addCheckedBookList(state, action.bookList);
+        }
         default:
             return state;
     }

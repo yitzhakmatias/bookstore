@@ -1,5 +1,6 @@
 /*! bulma.io v0.8.2 | MIT License | github.com/jgthms/bulma */
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+@import url(../node_modules/@fortawesome/fontawesome-svg-core/styles.css);
 @keyframes spinAround {
   from {
     transform: rotate(0deg); }

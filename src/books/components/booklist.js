@@ -18,7 +18,7 @@ const BookList = ({props, editBook}) => {
 
 
     const handleClick = (event) => {
-        console.log(event.target.id);
+
         setCurrentPage(Number(event.target.id));
     };
 
@@ -38,7 +38,6 @@ const BookList = ({props, editBook}) => {
             <li
                 key={number}
                 id={number}
-
             >
                 <a className="pagination-link is-current" aria-label="Page 1" aria-current="page"   id={number} onClick={handleClick}>{number}</a>
             </li>
