@@ -35,12 +35,13 @@
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "startDev": "npm-run-all -p watch-css start-js",
+    "start": "node server/server.js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "startDev": "react-scripts start",
+    "startSrv": "react-scripts start",
     "start-server": "node server/server.js"
   },
   "eslintConfig": {
