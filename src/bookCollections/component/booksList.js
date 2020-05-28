@@ -69,10 +69,10 @@ const BookList = ({handelOnCheck}) => {
             </li>
         )
     );
-    const renderPageNumbers = pagination.pageNumbers.map(number => {
+    const renderPageNumbers = pagination.pageNumbers.map((number,index) => {
         return (
 
-            <li>
+            <li key={index}>
                 <a className="pagination-link is-current" aria-label="Page 1" aria-current="page" id={number}
                    onClick={() => setPagination({
                        ...pagination, currentPage: Number(number)

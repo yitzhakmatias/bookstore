@@ -29,7 +29,12 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-uuid": "^1.0.2",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "classnames": "^2.2.6",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "jest-enzyme": "^7.1.2",
+    "jest-junit": "^3.6.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

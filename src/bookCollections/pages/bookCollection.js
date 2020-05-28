@@ -4,11 +4,13 @@ import CollectionList from "../component/collectionList";
 import BookContext from "../../context/IBookContext";
 
 const BookCollection = () => {
-    const [booCollection, setBookCollection] = useState({});
+    const [bookCollection, setBookCollection] = useState({});
     const bookContext = useContext(BookContext);
+
     function editListOfBooks(id) {
-      let bookCollection= bookContext.bookList;
-      console.log(id);
+        let collection =bookContext.bookList.filter(p => p.id === id)[0];
+     //   console.log(collection);
+        setBookCollection(collection);
     }
 
     return (
@@ -21,7 +23,7 @@ const BookCollection = () => {
                     <article className="tile is-child box">
                         <p className="title">Add New Book Collection</p>
                         <p className="subtitle">With some content</p>
-                        <NewBookCollection/>
+                        <NewBookCollection collectionList={bookCollection}/>
                     </article>
                 </div>
             </div>

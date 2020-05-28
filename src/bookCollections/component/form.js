@@ -4,13 +4,18 @@ import BookList from "./booksList";
 import BookContext from "../../context/IBookContext";
 import uuid from 'react-uuid'
 
-const NewBookCollection = () => {
+const NewBookCollection = ({collectionList}) => {
+
     const [checkedBookList, setCheckedBook] = useState([]);
     const {register, handleSubmit} = useForm({
         nativeValidation: true
     });
     const bookContext = useContext(BookContext);
 
+    React.useEffect(()=>{
+        console.log(collectionList.name);
+        console.log("props.collectionList.name");
+    },[]);
     const onCheckList = (e) => {
 
         let bookId = e.target.id;
@@ -42,7 +47,9 @@ const NewBookCollection = () => {
                 <div className="field">
                     <label className="label">Collection's Name : </label>
                     <div className="control">
-                        <input className="input is-primary" type="text" placeholder="Name"
+                        <input className="input is-primary"
+                               type="text" placeholder="Name"
+                               defaultValue={collectionList !== undefined ? collectionList.name : ""}
                                name="listName"
                                ref={register()}/>
                     </div>

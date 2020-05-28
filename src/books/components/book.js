@@ -14,8 +14,6 @@ const Book = ({book, save}) => {
 
     useEffect(() => {
         if (book !== undefined) {
-            console.log(book);
-            let localTags = "pepe estoy en o no ? , pero no o si pepe";
             setTags(book.tags);
         }
     }, []);

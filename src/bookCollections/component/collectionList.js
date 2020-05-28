@@ -1,14 +1,15 @@
 import React, {useContext} from 'react';
 import BookContext from "../../context/IBookContext";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faBook} from '@fortawesome/free-solid-svg-icons';
 
 
 const CollectionList = ({editListOfBooks}) => {
     const bookContext = useContext(BookContext);
-    const items = bookContext.bookList.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map((book, i) => (
-        <li  key={i}>
-            <a className="panel-block is-active"  onClick={editListOfBooks(book.id)}>
+
+    const items = bookContext.bookList.map((book, i) => (
+        <li key={i}>
+            <a className="panel-block is-active" onClick={() => editListOfBooks(book.id)}>
              <span className="panel-icon">
                   <i><FontAwesomeIcon icon={faBook}/></i>
              </span>
