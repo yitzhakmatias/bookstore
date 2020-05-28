@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import BookContext from "../../context/IBookContext";
 
-const BookList = ({handelOnCheck}) => {
+const BookList = ({handelOnCheck, collectionList}) => {
 
     const [books, setBooks] = React.useState([]);
     const bookContext = useContext(BookContext);
@@ -18,7 +18,7 @@ const BookList = ({handelOnCheck}) => {
         getData();
     }, [pagination.currentPage]);
 
-    const getData =  () => {
+    const getData = () => {
         const indexOfLastTodo = pagination.currentPage * pagination.pageSize;
         const indexOfFirstTodo = indexOfLastTodo - pagination.pageSize;
         setBooks(bookContext.Books.slice(indexOfFirstTodo, indexOfLastTodo));
@@ -38,7 +38,11 @@ const BookList = ({handelOnCheck}) => {
 
     };
 
-
+    const isChecked = (uuid) => {
+        if (collectionList === undefined) return;
+        let data = collectionList.find(p => p === uuid);
+        return data !== undefined;
+    };
     const item = books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map((book, i) => (
             <li key={i}>
                 <React.Fragment key={book.uuid}>
@@ -55,7 +59,11 @@ const BookList = ({handelOnCheck}) => {
                                         <strong>{book.title}</strong>
                                         <br/>
                                         <label className="checkbox">
-                                            <input type="checkbox" onChange={handelOnCheck} id={book.uuid} />
+                                            <input type="checkbox"
+                                                   onChange={handelOnCheck}
+                                                   id={book.uuid}
+                                                   checked={isChecked(book.uuid)}
+                                                 />
                                             {book.uuid}
                                         </label>
 
@@ -69,7 +77,7 @@ const BookList = ({handelOnCheck}) => {
             </li>
         )
     );
-    const renderPageNumbers = pagination.pageNumbers.map((number,index) => {
+    const renderPageNumbers = pagination.pageNumbers.map((number, index) => {
         return (
 
             <li key={index}>

@@ -7,17 +7,18 @@ import uuid from 'react-uuid'
 const NewBookCollection = ({collectionList}) => {
 
     const [checkedBookList, setCheckedBook] = useState([]);
+    const [action, setAction] = useState("");
     const {register, handleSubmit} = useForm({
         nativeValidation: true
     });
     const bookContext = useContext(BookContext);
 
-    React.useEffect(()=>{
-        console.log(collectionList.name);
+    React.useEffect(() => {
+        console.log(collectionList);
         console.log("props.collectionList.name");
-    },[]);
+    }, [collectionList]);
     const onCheckList = (e) => {
-
+        console.log( e.target.id);
         let bookId = e.target.id;
         if (e.target.checked) {
             let checkedBooks = [...checkedBookList, bookId];
@@ -32,18 +33,28 @@ const NewBookCollection = ({collectionList}) => {
     };
     const onSubmit = (data, e) => {
 
+        if (action === "add") {
+            const bookCollection = {
+                id: uuid(),
+                name: data.listName,
+                uuids: checkedBookList
+            };
 
-        const bookCollection = {
-            id:uuid(),
-            name: data.listName,
-            uuids: checkedBookList
-        };
-        bookContext.addBookList(bookCollection);
-        e.target.reset();
+            bookContext.addBookList(bookCollection);
+            e.target.reset();
+        }
+        if (action === "remove") {
+
+            bookContext.removeBookList(collectionList.id);
+        }
     };
 
-    function removeItem(id) {
-        bookContext.removeBookList(id);
+    function removeItem() {
+        setAction("remove");
+    }
+
+    function add() {
+        setAction("add");
     }
 
     return (
@@ -62,14 +73,16 @@ const NewBookCollection = ({collectionList}) => {
                 </div>
                 <div className="field">
 
-                    <BookList  handelOnCheck={onCheckList}  />
+                    <BookList handelOnCheck={onCheckList} collectionList={collectionList.uuids}/>
                 </div>
                 <div className="field is-grouped ">
                     <p className="control">
-                        <button className="button is-primary">Submit</button>
+                        <button className="button is-primary" onClick={() => add()}>Submit</button>
                     </p>
                     <p className="control">
-                        <button className="button is-danger is-outlined" onClick={()=>removeItem(collectionList.id)}>Remove</button>
+                        <button className="button is-danger is-outlined"
+                                onClick={() => removeItem()}>Remove
+                        </button>
                     </p>
                 </div>
             </form>
