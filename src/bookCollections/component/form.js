@@ -41,6 +41,11 @@ const NewBookCollection = ({collectionList}) => {
         bookContext.addBookList(bookCollection);
         e.target.reset();
     };
+
+    function removeItem(id) {
+        bookContext.removeBookList(id);
+    }
+
     return (
         <div className="tile is-child box">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +69,7 @@ const NewBookCollection = ({collectionList}) => {
                         <button className="button is-primary">Submit</button>
                     </p>
                     <p className="control">
-                        <button className="button is-danger is-outlined">Remove</button>
+                        <button className="button is-danger is-outlined" onClick={()=>removeItem(collectionList.id)}>Remove</button>
                     </p>
                 </div>
             </form>

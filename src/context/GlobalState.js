@@ -80,6 +80,7 @@ const GlobalState = props => {
             Books: state.books ?? [],
             count: state.count,
             addBookList: addBookList,
+            removeBookList: removeBookList,
             addCheckedBookList: addCheckedBookList,
             bookList: state.bookList ?? []
         }}>{props.children}

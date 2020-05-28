@@ -13,6 +13,7 @@ const layout = () => {
             <Router>
                 <MainNavigation/>
                 <Switch>
+
                     <Route path="/" exact component={Books}/>
                     <Route path="/books" exact component={Books}/>
                     <Route path="/book" exact component={book}/>

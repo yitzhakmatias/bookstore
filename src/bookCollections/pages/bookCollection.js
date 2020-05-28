@@ -9,7 +9,7 @@ const BookCollection = () => {
 
     function editListOfBooks(id) {
         let collection =bookContext.bookList.filter(p => p.id === id)[0];
-     //   console.log(collection);
+
         setBookCollection(collection);
     }
 
