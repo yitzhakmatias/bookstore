@@ -52,14 +52,12 @@ const NewBookCollection = () => {
 
                     <BookList  handelOnCheck={onCheckList}  />
                 </div>
-                <div className="field is-grouped">
+                <div className="field is-grouped ">
                     <p className="control">
                         <button className="button is-primary">Submit</button>
                     </p>
                     <p className="control">
-                        <a className="button is-light">
-                            Cancel
-                        </a>
+                        <button className="button is-danger is-outlined">Remove</button>
                     </p>
                 </div>
             </form>

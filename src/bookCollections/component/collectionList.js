@@ -4,15 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 
 
-const CollectionList = () => {
+const CollectionList = ({editListOfBooks}) => {
     const bookContext = useContext(BookContext);
     const items = bookContext.bookList.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map((book, i) => (
-        <a className="panel-block is-active">
+        <li  key={i}>
+            <a className="panel-block is-active"  onClick={editListOfBooks(book.id)}>
              <span className="panel-icon">
                   <i><FontAwesomeIcon icon={faBook}/></i>
              </span>
-            {book.name}
-        </a>
+                {book.name}
+            </a>
+        </li>
     ));
     return (
         <article className="tile is-child box panel is-primary">
@@ -28,7 +30,10 @@ const CollectionList = () => {
                      </span>
                 </p>
             </div>
-            {items}
+            <ul>
+                {items}
+            </ul>
+
 
         </article>
     );

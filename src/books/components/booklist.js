@@ -7,43 +7,51 @@ import BookElement from "./bookElement";
 
 const BookList = ({props, editBook}) => {
     const bookContext = useContext(BookContext);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageNumbers, setPageNumbers] = useState(()=>{
-        let pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(bookContext.count / 5); i++) {
-            pageNumbers.push(i);
-        }
-        return pageNumbers;
+
+    const [books, setBooks] = React.useState([]);
+
+    const [pagination, setPagination] = React.useState({
+        currentPage: 1,
+        pageSize: 2,
+        pageNumbers: [],
+        lastPage: 0
     });
 
+    React.useEffect(() => {
+        getData();
+    }, [pagination.currentPage]);
 
-    const handleClick = (event) => {
-
-        setCurrentPage(Number(event.target.id));
+    const getData =  () => {
+        const indexOfLastTodo = pagination.currentPage * pagination.pageSize;
+        const indexOfFirstTodo = indexOfLastTodo - pagination.pageSize;
+        setBooks(bookContext.Books.slice(indexOfFirstTodo, indexOfLastTodo));
+        pageNumberList(bookContext.Books);
     };
-
-    useEffect(() => {
-      //  console.log("paginations");
-       // updatePages();
-    }, []);
-
-    const updatePages = () => {
-        for (let i = 1; i <= Math.ceil(bookContext.count / 5); i++) {
+    const pageNumberList = (books) => {
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(books.length / pagination.pageSize); i++) {
             pageNumbers.push(i);
         }
-        setPageNumbers(pageNumbers);
+        setPagination({
+            ...pagination,
+            lastPage: pageNumbers.length - 1 > 0 ? pageNumbers.length : 0,
+            pageNumbers: pageNumbers
+        })
+
     };
-    const renderPageNumbers = pageNumbers.map(number => (
-        <React.Fragment  key={number}>
-            <li
-                key={number}
-                id={number}
-            >
-                <a className="pagination-link is-current" aria-label="Page 1" aria-current="page"   id={number} onClick={handleClick}>{number}</a>
+
+    const renderPageNumbers = pagination.pageNumbers.map(number => {
+        return (
+
+            <li>
+                <a className="pagination-link is-current" aria-label="Page 1" aria-current="page" id={number}
+                   onClick={() => setPagination({
+                       ...pagination, currentPage: Number(number)
+                   })}>{number}</a>
             </li>
-        </React.Fragment>
-    ));
-    const itemRows = bookContext.Books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map(book => (
+        );
+    });
+    const itemRows = books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map(book => (
         <React.Fragment key={book.uuid}>
             <li><BookElement book={book} editBook={() => editBook(book.uuid)}
                              deleteBook={() => bookContext.deleteBook(book.uuid)}/></li>
@@ -58,9 +66,17 @@ const BookList = ({props, editBook}) => {
             </ul>
 
             <nav className="pagination" role="navigation" aria-label="pagination">
-                <a className="pagination-previous" title="This is the first page" disabled>Previous</a>
-                <a className="pagination-next">Next page</a>
-                <ul id="page-numbers">
+                <a className="pagination-previous" title="This is the first page"
+                   onClick={() => setPagination({
+                       ...pagination, currentPage: pagination.currentPage - 1 > 1 ? pagination.currentPage - 1 : 1
+                   })}
+                >Previous</a>
+                <a className="pagination-next" onClick={() => setPagination({
+                        ...pagination,
+                        currentPage: pagination.currentPage + 1 < pagination.lastPage ? pagination.currentPage + 1 : pagination.lastPage
+                    }
+                )}>Next page</a>
+                <ul className="pagination-list">
                     {renderPageNumbers}
                 </ul>
             </nav>
