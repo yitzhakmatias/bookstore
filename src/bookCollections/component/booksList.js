@@ -1,9 +1,12 @@
 import React, {useContext} from 'react';
 import BookContext from "../../context/IBookContext";
+import Checkbox from "./checkbox";
 
 const BookList = ({handelOnCheck, collectionList}) => {
 
     const [books, setBooks] = React.useState([]);
+    const [selectedBooks, setSelectedBooks] = React.useState([]);
+
     const bookContext = useContext(BookContext);
 
 
@@ -16,7 +19,9 @@ const BookList = ({handelOnCheck, collectionList}) => {
 
     React.useEffect(() => {
         getData();
-    }, [pagination.currentPage]);
+
+        console.log(selectedBooks);
+    }, [pagination.currentPage, collectionList]);
 
     const getData = () => {
         const indexOfLastTodo = pagination.currentPage * pagination.pageSize;
@@ -38,10 +43,14 @@ const BookList = ({handelOnCheck, collectionList}) => {
 
     };
 
-    const isChecked = (uuid) => {
-        if (collectionList === undefined) return;
-        let data = collectionList.find(p => p === uuid);
-        return data !== undefined;
+
+    const isChecked = uuid => {
+
+        console.log(collectionList);
+        if (collectionList.length === 0) return false;
+        let data = collectionList.find(p => p.id === uuid);
+        if (data === undefined) return false;
+        return data.checked;
     };
     const item = books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map((book, i) => (
             <li key={i}>
@@ -63,7 +72,7 @@ const BookList = ({handelOnCheck, collectionList}) => {
                                                    onChange={handelOnCheck}
                                                    id={book.uuid}
                                                    checked={isChecked(book.uuid)}
-                                                 />
+                                            />
                                             {book.uuid}
                                         </label>
 

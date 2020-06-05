@@ -4,9 +4,12 @@ import BookList from "./booksList";
 import BookContext from "../../context/IBookContext";
 import uuid from 'react-uuid'
 
-const NewBookCollection = ({collectionList}) => {
+const NewBookCollection = ({id}) => {
 
-    const [checkedBookList, setCheckedBook] = useState([]);
+
+    const [collectionList, setCollectionList] = useState([]);
+    const [bookList, setBookList] = useState([]);
+
     const [action, setAction] = useState("");
     const {register, handleSubmit} = useForm({
         nativeValidation: true
@@ -14,19 +17,42 @@ const NewBookCollection = ({collectionList}) => {
     const bookContext = useContext(BookContext);
 
     React.useEffect(() => {
-        console.log(collectionList);
-        console.log("props.collectionList.name");
-    }, [collectionList]);
-    const onCheckList = (e) => {
-        console.log( e.target.id);
-        let bookId = e.target.id;
-        if (e.target.checked) {
-            let checkedBooks = [...checkedBookList, bookId];
-            setCheckedBook(checkedBooks);
+        console.log("checklist");
+        if (id.constructor !== Object) {
+            let collection = bookContext.bookList.find(p => p.id === id);
+            setCollectionList(collection.uuids);
+            setBookList(collection);
+        }
+
+    }, [id]);
+    const onCheckList = (evt) => {
+
+        const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
+        let bookId = evt.target.id;
+
+
+        if (value) {
+
+            if (collectionList === undefined || collectionList.length === 0) {
+
+                setCollectionList([{id: bookId, checked: true}])
+            } else {
+                let collection = collectionList.find(p => p.id === bookId);
+                if (collection === undefined) {
+                    setCollectionList([...collectionList, {id: bookId, checked: true}])
+                }
+                //collectionList = [...collectionList, {id: bookId, checked: true}];
+            }
+
 
         } else {
-            let checkedBooks = checkedBookList.filter(p => p !== bookId);
-            setCheckedBook(checkedBooks);
+
+            if (collectionList !== undefined) {
+                let collection = collectionList.filter(p => p.id !== bookId);
+                if (collection !== undefined) {
+                    setCollectionList([...collection])
+                }
+            }
 
         }
 
@@ -37,7 +63,7 @@ const NewBookCollection = ({collectionList}) => {
             const bookCollection = {
                 id: uuid(),
                 name: data.listName,
-                uuids: checkedBookList
+                uuids: collectionList
             };
 
             bookContext.addBookList(bookCollection);
@@ -65,7 +91,7 @@ const NewBookCollection = ({collectionList}) => {
                     <div className="control">
                         <input className="input is-primary"
                                type="text" placeholder="Name"
-                               defaultValue={collectionList !== undefined ? collectionList.name : ""}
+                               defaultValue={bookList !== undefined ? bookList.name : ""}
                                name="listName"
                                ref={register()}/>
                     </div>
@@ -73,7 +99,7 @@ const NewBookCollection = ({collectionList}) => {
                 </div>
                 <div className="field">
 
-                    <BookList handelOnCheck={onCheckList} collectionList={collectionList.uuids}/>
+                    <BookList handelOnCheck={onCheckList} collectionList={collectionList}/>
                 </div>
                 <div className="field is-grouped ">
                     <p className="control">

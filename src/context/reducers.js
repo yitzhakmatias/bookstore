@@ -19,7 +19,7 @@ export const initialState = {
     pageNumbers: [],
     loading: false,
     error: null,
-    checkedList:[],
+    checkedList: [],
     bookList: [
         // {id : "", collectionName:"", uuid:[]}
     ],
@@ -73,6 +73,25 @@ const addBookList = (state, bookList) => {
     if (bookList === []) return {
         ...state
     };
+    let storedListBook = state.bookList.find(p => p.id === bookList.id);
+
+    if (storedListBook !== undefined && storedListBook.uuids !== undefined) {
+
+        let newBooks = state.bookList.map(p => {
+            if (p.id === bookList.id) {
+                let x = [bookList.uuids];
+                return {
+                    ...p,
+                    name: bookList.name,
+                    uuids: p.uuids.push(bookList.uuids)
+                };
+            }
+        });
+        return {
+            ...state,
+            bookList: newBooks
+        }
+    }
 
     const newBookList = [...state.bookList, bookList];
 
@@ -91,11 +110,11 @@ const removeBookList = (state, id) => {
 const addCheckedBookList = (state, bookList) => {
 
     console.log(bookList);
-/*    const newBookList = [...state.checkedList, bookList];
-    return {
-        ...state,
-        checkedList: newBookList
-    }*/
+    /*    const newBookList = [...state.checkedList, bookList];
+        return {
+            ...state,
+            checkedList: newBookList
+        }*/
 
 };
 export const bookReducer = (state, action) => {

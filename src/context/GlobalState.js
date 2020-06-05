@@ -21,7 +21,6 @@ const GlobalState = props => {
         const booksList = localStorage.getItem('booksList');
         if (data === "undefined") return initialState;
 
-        console.log("data");
         return data ? {
             books: JSON.parse(data),
             count: JSON.parse(data).length,
@@ -66,6 +65,7 @@ const GlobalState = props => {
         dispatch({
             type: ADD_CHECKED_BOOK_LIST, bookList: _BookList
         })
+
     };
     const removeBookList = (id) => {
 
