@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import BookContext from "../../context/IBookContext";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBook} from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,9 @@ import {faBook} from '@fortawesome/free-solid-svg-icons';
 
 const CollectionList = ({editListOfBooks}) => {
     const bookContext = useContext(BookContext);
-
+    useEffect(() => {
+        console.log("collection");
+    });
     const items = bookContext.bookList.map((book, i) => (
         <li key={i}>
             <a className="panel-block is-active" onClick={() => editListOfBooks(book.id)}>

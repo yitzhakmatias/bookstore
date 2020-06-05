@@ -17,7 +17,7 @@ const NewBookCollection = ({id}) => {
     const bookContext = useContext(BookContext);
 
     React.useEffect(() => {
-        console.log("checklist");
+
         if (id.constructor !== Object) {
             let collection = bookContext.bookList.find(p => p.id === id);
             setCollectionList(collection.uuids);
@@ -61,7 +61,7 @@ const NewBookCollection = ({id}) => {
 
         if (action === "add") {
             const bookCollection = {
-                id: uuid(),
+                id: bookList.id !== undefined ? bookList.id : uuid(),
                 name: data.listName,
                 uuids: collectionList
             };
@@ -103,7 +103,7 @@ const NewBookCollection = ({id}) => {
                 </div>
                 <div className="field is-grouped ">
                     <p className="control">
-                        <button className="button is-primary" onClick={() => add()}>Submit</button>
+                        <button className="button is-primary" onClick={() => add()}>Save</button>
                     </p>
                     <p className="control">
                         <button className="button is-danger is-outlined"

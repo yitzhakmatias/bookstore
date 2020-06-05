@@ -79,14 +79,16 @@ const addBookList = (state, bookList) => {
 
         let newBooks = state.bookList.map(p => {
             if (p.id === bookList.id) {
-                let x = [bookList.uuids];
                 return {
                     ...p,
                     name: bookList.name,
-                    uuids: p.uuids.push(bookList.uuids)
+                    uuids: bookList.uuids
                 };
             }
+            return p;
         });
+
+
         return {
             ...state,
             bookList: newBooks
