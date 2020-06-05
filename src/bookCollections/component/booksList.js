@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import BookContext from "../../context/IBookContext";
-import Checkbox from "./checkbox";
+
 
 const BookList = ({handelOnCheck, collectionList}) => {
 
@@ -46,7 +46,7 @@ const BookList = ({handelOnCheck, collectionList}) => {
 
     const isChecked = uuid => {
 
-        console.log(collectionList);
+
         if (collectionList.length === 0) return false;
         let data = collectionList.find(p => p.id === uuid);
         if (data === undefined) return false;
