@@ -41,7 +41,6 @@ const NewBookCollection = ({id}) => {
                 if (collection === undefined) {
                     setCollectionList([...collectionList, {id: bookId, checked: true}])
                 }
-                //collectionList = [...collectionList, {id: bookId, checked: true}];
             }
 
 
@@ -71,7 +70,7 @@ const NewBookCollection = ({id}) => {
         }
         if (action === "remove") {
 
-            bookContext.removeBookList(collectionList.id);
+            bookContext.removeBookList(bookList.id !== undefined ? bookList.id : 0);
         }
     };
 
