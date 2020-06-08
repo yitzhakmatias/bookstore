@@ -12,7 +12,7 @@ const Books = () => {
     const bookContext = useContext(BookContext);
 
     const inputChangeHandler = (uuid) => {
-        let book= bookContext.Books.find(p=>p.uuid===uuid);
+        let book = bookContext.Books.find(p => p.uuid === uuid);
         setBook(book);
         setShowModal(true);
     };
@@ -25,18 +25,15 @@ const Books = () => {
         <section className="section">
             <div className="tile is-ancestor">
                 <div className="tile is-3 is-vertical is-parent">
-                    <div className="tile is-child box">
-                        <p className="title">New Book</p>
-                        <Book />
-                    </div>
+
+                    <Book/>
                 </div>
                 <div className="tile is-parent">
-                    <div className="tile is-child box">
                         {showModal ?
                             <ModalBook book={book} isVisible={() => handleVisibility()}/>
                             : null}
 
-                        <article className="panel is-primary">
+                        <article className="panel is-primary has-background-white">
                             <p className="panel-heading">
                                 Book List
                             </p>
@@ -50,11 +47,11 @@ const Books = () => {
                                 </p>
                             </div>
                             <div className="panel-block">
-                                <BookList editBook={inputChangeHandler} />
+                                <BookList editBook={inputChangeHandler}/>
                             </div>
 
                         </article>
-                    </div>
+
                 </div>
             </div>
 

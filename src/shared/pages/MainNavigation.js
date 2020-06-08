@@ -1,5 +1,5 @@
 import React from 'react';
-
+import logo from '../../cover.png'
 
 const MainNavigation = () => {
     return (
@@ -21,7 +21,6 @@ const MainNavigation = () => {
                     <a className="navbar-item" href="/books">
                         Books
                     </a>
-
                     <a className="navbar-item" href="/lists">
                         Book List
                     </a>

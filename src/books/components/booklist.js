@@ -12,7 +12,7 @@ const BookList = ({props, editBook}) => {
 
     const [pagination, setPagination] = React.useState({
         currentPage: 1,
-        pageSize: 2,
+        pageSize: 5,
         pageNumbers: [],
         lastPage: 0
     });
@@ -21,7 +21,7 @@ const BookList = ({props, editBook}) => {
         getData();
     }, [pagination.currentPage]);
 
-    const getData =  () => {
+    const getData = () => {
         const indexOfLastTodo = pagination.currentPage * pagination.pageSize;
         const indexOfFirstTodo = indexOfLastTodo - pagination.pageSize;
         setBooks(bookContext.Books.slice(indexOfFirstTodo, indexOfLastTodo));
@@ -51,19 +51,21 @@ const BookList = ({props, editBook}) => {
             </li>
         );
     });
-    const itemRows = books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map(book => (
-        <React.Fragment key={book.uuid}>
-            <li><BookElement book={book} editBook={() => editBook(book.uuid)}
-                             deleteBook={() => bookContext.deleteBook(book.uuid)}/></li>
-        </React.Fragment>
+    const itemRows = books.sort((a, b) => (a.createdDate < b.createdDate) ? 1 : -1).map((book, i) => (
+
+
+        <BookElement book={book} editBook={() => editBook(book.uuid)}
+                     deleteBook={() => bookContext.deleteBook(book.uuid)}/>
+
+
     ));
 
     return (
         <div className="">
 
-            <ul className="block-list is-small">
-                {itemRows}
-            </ul>
+
+            {itemRows}
+
 
             <nav className="pagination" role="navigation" aria-label="pagination">
                 <a className="pagination-previous" title="This is the first page"

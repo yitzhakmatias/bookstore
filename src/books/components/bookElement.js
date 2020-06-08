@@ -4,7 +4,7 @@ import Moment from "react-moment";
 const BookElement = (props) => {
     return (
 
-        <div className="box">
+        <div className="box  ">
             <article className="media">
                 <div className="media-left">
                     <figure className="image is-128x128">
